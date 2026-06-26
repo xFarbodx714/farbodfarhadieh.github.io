@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farbod Farhadieh</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=El+Messiri:wght@400;600;700&family=Bebas+Neue&family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #080808; --dark: #111; --mid: #1a1a1a; --border: #2a2a2a;
+    --red: #9b1a1a; --red-light: #c0392b; --white: #f0ece4; --grey: #888;
+    --font: 'El Messiri', serif; --display: 'Bebas Neue', serif; --sans: 'Helvetica Neue', Arial, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: var(--sans); overflow-x: hidden; }
+  body.fa { font-family: var(--font); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 48px;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.97), transparent);
+    backdrop-filter: blur(4px);
+  }
+  .nav-logo { font-family: var(--display); font-size: 1.4rem; letter-spacing: 0.25em; color: var(--red); text-decoration: none; }
+  .nav-right { display: flex; align-items: center; gap: 32px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: var(--grey); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--white); }
+  .lang-toggle {
+    background: none; border: 1px solid var(--red); color: var(--white); cursor: pointer;
+    font-size: 0.82rem; padding: 6px 14px; transition: all 0.3s; font-family: var(--font);
+    display: flex; align-items: center; gap: 8px; border-radius: 2px;
+  }
+  .lang-toggle:hover { background: var(--red); }
+  .lang-globe svg { display: block; }
+
+  /* SECTIONS */
+  section { padding: 120px 48px; }
+  .section-label { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--red); margin-bottom: 14px; }
+  .section-title { font-family: var(--display); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 400; line-height: 1; letter-spacing: 0.05em; margin-bottom: 60px; }
+  html[dir="rtl"] .section-title { font-family: var(--font); font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: 0; }
+  .divider { width: 60px; height: 1px; background: var(--red); margin-bottom: 36px; }
+
+  /* HOME */
+  #home {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 48px 80px; position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,1) 0%, rgba(8,8,8,0.2) 60%, rgba(8,8,8,0.7) 100%),
+      linear-gradient(135deg, #0a0000 0%, #1a0505 40%, #0f0000 100%);
+  }
+  .bar-top, .bar-bottom { position: absolute; left: 0; right: 0; height: 55px; background: var(--black); }
+  .bar-top { top: 0; } .bar-bottom { bottom: 0; }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-portrait {
+    position: absolute; inset: 0;
+    z-index: 1;
+  }
+  .hero-portrait::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.5) 0%, rgba(8,8,8,0.1) 30%, rgba(8,8,8,0.1) 50%, rgba(8,8,8,0.95) 100%);
+    z-index: 2;
+  }
+  .hero-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+  .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
+  .hero-title {
+    font-family: var(--display); font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 400; line-height: 0.9; letter-spacing: 0.05em; color: var(--white); margin-bottom: 24px;
+  }
+  html[dir="rtl"] .hero-title { font-family: var(--font); font-size: clamp(3rem, 7vw, 6rem); letter-spacing: 0; }
+  .hero-title em { font-style: italic; color: var(--red-light); font-family: var(--font); }
+  .hero-sub { font-size: 0.88rem; color: var(--grey); letter-spacing: 0.08em; max-width: 420px; line-height: 1.9; }
+  .hero-cta { margin-top: 36px; display: flex; gap: 20px; align-items: center; }
+  .btn-primary { display: inline-block; padding: 13px 34px; border: 1px solid var(--red); color: var(--red); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s; }
+  .btn-primary:hover { background: var(--red); color: var(--white); }
+  .btn-ghost { color: var(--grey); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; border-bottom: 1px solid transparent; transition: all 0.3s; }
+  .btn-ghost:hover { color: var(--white); border-color: var(--white); }
+
+  /* PHOTO GRID */
+  .photo-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 240px; gap: 4px;
+  }
+  .photo-card { position: relative; overflow: hidden; cursor: pointer; }
+  .photo-card.tall { grid-row: span 2; }
+  .photo-card.wide { grid-column: span 2; }
+  .photo-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a0000, #0f0000);
+    transition: transform 0.5s ease;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; color: rgba(255,255,255,0.04);
+  }
+  .photo-card:hover .photo-bg { transform: scale(1.04); }
+  .photo-hover {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+    display: flex; align-items: flex-end; padding: 18px;
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .photo-card:hover .photo-hover { opacity: 1; }
+  .photo-hover span { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
+
+  /* CINEMATOGRAPHY */
+  #cinematography { background: var(--dark); }
+  .films-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2px; }
+  .film-card { position: relative; aspect-ratio: 16/10; overflow: hidden; cursor: pointer; }
+  .film-bg { position: absolute; inset: 0; transition: transform 0.5s; }
+  .film-card:hover .film-bg { transform: scale(1.05); }
+  .f1 { background: linear-gradient(135deg, #1a0000, #2d0505); }
+  .f2 { background: linear-gradient(135deg, #0f0000, #3a0808); }
+  .f3 { background: linear-gradient(135deg, #2a0000, #150000); }
+  .f4 { background: linear-gradient(135deg, #1f0303, #3d0a0a); }
+  .f5 { background: linear-gradient(135deg, #0d0000, #2e0505); }
+  .f6 { background: linear-gradient(135deg, #3a0000, #100000); }
+  .film-frame { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .film-frame::before { content: ''; position: absolute; inset: 12px; border: 1px solid rgba(255,255,255,0.05); }
+  .film-frame-icon { font-size: 2.5rem; opacity: 0.08; }
+  .film-info {
+    position: absolute; inset: 0; padding: 24px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .film-card:hover .film-info { opacity: 1; }
+  .film-type { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); margin-bottom: 5px; }
+  .film-name { font-family: var(--font); font-size: 1.2rem; color: var(--white); }
+  .film-year { font-size: 0.7rem; color: var(--grey); margin-top: 3px; }
+
+  /* BTS */
+  #bts { background: var(--black); }
+  .bts-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 200px; gap: 4px;
+  }
+  .bts-card { position: relative; overflow: hidden; cursor: pointer; }
+  .bts-card.big { grid-column: span 2; grid-row: span 2; }
+  .bts-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #120000, #0a0000);
+    transition: transform 0.5s;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; color: rgba(255,255,255,0.04);
+  }
+  .bts-card:hover .bts-bg { transform: scale(1.05); }
+  .bts-hover {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0; transition: opacity 0.4s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .bts-card:hover .bts-hover { opacity: 1; }
+  .bts-hover span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
+
+  /* ABOUT */
+  #about { background: var(--dark); }
+  .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
+  .about-photo {
+    aspect-ratio: 3/4; position: relative; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .about-photo span { font-size: 4rem; opacity: 0.1; }
+  .about-text p { font-size: 1rem; line-height: 1.95; color: #b0a898; margin-bottom: 20px; }
+  .about-text p strong { color: var(--white); font-weight: 600; }
+  .about-block { margin-top: 40px; }
+  .about-block-title { font-family: var(--display); font-size: 1.5rem; letter-spacing: 0.1em; color: var(--red); margin-bottom: 20px; }
+  html[dir="rtl"] .about-block-title { font-family: var(--font); letter-spacing: 0; }
+  .about-items { display: flex; flex-direction: column; gap: 14px; }
+  .about-item { padding: 16px 20px; border-left: 2px solid var(--red); background: var(--mid); }
+  html[dir="rtl"] .about-item { border-left: none; border-right: 2px solid var(--red); }
+  .about-item-title { font-size: 0.9rem; color: var(--white); margin-bottom: 4px; }
+  .about-item-sub { font-size: 0.78rem; color: var(--grey); letter-spacing: 0.05em; }
+  .placeholder-text { font-size: 0.75rem; color: #444; font-style: italic; }
+
+  /* CONTACT */
+  #contact { background: var(--black); }
+  .contact-links { display: flex; flex-direction: column; gap: 0; max-width: 600px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 20px; text-decoration: none;
+    color: var(--white); font-size: 1rem; padding: 20px 0;
+    border-bottom: 1px solid var(--border); transition: all 0.3s; font-family: var(--font);
+  }
+  .contact-link:hover { color: var(--red); border-color: var(--red); padding-left: 8px; }
+  html[dir="rtl"] .contact-link:hover { padding-left: 0; padding-right: 8px; }
+  .contact-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); width: 90px; flex-shrink: 0; font-family: var(--sans); }
+
+  /* FOOTER */
+  footer { padding: 36px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: var(--display); color: var(--red); font-size: 1.1rem; letter-spacing: 0.2em; }
+  html[dir="rtl"] .footer-logo { font-family: var(--font); letter-spacing: 0; }
+  footer p { font-size: 0.7rem; color: var(--grey); }
+
+  @media (max-width: 768px) {
+    nav { padding: 18px 20px; } .nav-links { display: none; }
+    section, #home { padding: 80px 20px; } #home { padding-bottom: 70px; }
+    .photo-grid, .bts-grid { grid-template-columns: repeat(2, 1fr); }
+    .photo-card.wide { grid-column: span 1; } .bts-card.big { grid-column: span 1; grid-row: span 1; }
+    .about-grid { grid-template-columns: 1fr; gap: 36px; }
+    footer { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-logo" data-en="FARBOD FARHADIEH" data-fa="فربد فرهادیه">FARBOD FARHADIEH</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#home" data-en="Home" data-fa="خانه">Home</a></li>
+      <li><a href="#photography" data-en="Photography" data-fa="عکاسی">Photography</a></li>
+      <li><a href="#cinematography" data-en="Cinematography" data-fa="فیلمبرداری">Cinematography</a></li>
+      <li><a href="#bts" data-en="Behind the Scenes" data-fa="پشت صحنه">BTS</a></li>
+      <li><a href="#about" data-en="About" data-fa="درباره من">About</a></li>
+    </ul>
+    <button class="lang-toggle" onclick="toggleLang()">
+      <span class="lang-globe"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+      <span class="lang-text">فارسی</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="bar-top"></div>
+  <div class="bar-bottom"></div>
+  <div class="hero-content">
+    <div class="hero-portrait">
+      <img src="https://i.ibb.co/7JS7RkmB/20250514-001410.jpg" alt="Farbod Farhadieh">
+    </div><p class="hero-eyebrow" data-en="Cinematographer & Director of Photography" data-fa="فیلمبردار و مدیر فیلمبرداری">Cinematographer & Director of Photography</p>
+    <h1 class="hero-title">
+      <span data-en="The image<br><em>before</em><br>the word." data-fa="تصویر،<br><em>پیش از</em><br>کلام.">The image<br><em>before</em><br>the word.</span>
+    </h1>
+    <p class="hero-sub" data-en="Visual storytelling through composition, light, and motion. Based in Tehran — available worldwide." data-fa="روایت تصویری از طریق ترکیب‌بندی، نور و حرکت. مستقر در تهران — در دسترس در سراسر جهان.">Visual storytelling through composition, light, and motion. Based in Tehran — available worldwide.</p>
+    <div class="hero-cta">
+      <a href="#cinematography" class="btn-primary" data-en="View Work" data-fa="مشاهده آثار">View Work</a>
+      <a href="#about" class="btn-ghost" data-en="About Me →" data-fa="درباره من ←">About Me →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOGRAPHY -->
+<section id="photography" style="background: var(--dark);">
+  <p class="section-label" data-en="Photography" data-fa="عکاسی">Photography</p>
+  <h2 class="section-title" data-en="Stills from the world." data-fa="تصاویر ثابت از جهان.">Stills from the world.</h2>
+  <div class="photo-grid">
+    <div class="photo-card tall"><div class="photo-bg">◼</div><div class="photo-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="photo-card"><div class="photo-bg">◼</div><div class="photo-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="photo-card"><div class="photo-bg">◼</div><div class="photo-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="photo-card wide"><div class="photo-bg">◼</div><div class="photo-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="photo-card"><div class="photo-bg">◼</div><div class="photo-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="photo-card tall"><div class="photo-bg">◼</div><div class="photo-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="photo-card"><div class="photo-bg">◼</div><div class="photo-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="photo-card"><div class="photo-bg">◼</div><div class="photo-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+  </div>
+</section>
+
+<!-- CINEMATOGRAPHY -->
+<section id="cinematography">
+  <p class="section-label" data-en="Cinematography" data-fa="فیلمبرداری">Cinematography</p>
+  <h2 class="section-title" data-en="Projects that moved me." data-fa="پروژه‌هایی که تحریکم کردند.">Projects that moved me.</h2>
+  <div class="films-grid">
+    <div class="film-card"><div class="film-bg f1"></div><div class="film-frame"><span class="film-frame-icon">◼</span></div><div class="film-info"><p class="film-type" data-en="Feature Film" data-fa="فیلم بلند">Feature Film</p><p class="film-name" data-en="Project Title" data-fa="عنوان پروژه">Project Title</p><p class="film-year">2024</p></div></div>
+    <div class="film-card"><div class="film-bg f2"></div><div class="film-frame"><span class="film-frame-icon">◼</span></div><div class="film-info"><p class="film-type" data-en="Short Film" data-fa="فیلم کوتاه">Short Film</p><p class="film-name" data-en="Project Title" data-fa="عنوان پروژه">Project Title</p><p class="film-year">2024</p></div></div>
+    <div class="film-card"><div class="film-bg f3"></div><div class="film-frame"><span class="film-frame-icon">◼</span></div><div class="film-info"><p class="film-type" data-en="Documentary" data-fa="مستند">Documentary</p><p class="film-name" data-en="Project Title" data-fa="عنوان پروژه">Project Title</p><p class="film-year">2023</p></div></div>
+    <div class="film-card"><div class="film-bg f4"></div><div class="film-frame"><span class="film-frame-icon">◼</span></div><div class="film-info"><p class="film-type" data-en="Commercial" data-fa="تبلیغات">Commercial</p><p class="film-name" data-en="Project Title" data-fa="عنوان پروژه">Project Title</p><p class="film-year">2023</p></div></div>
+    <div class="film-card"><div class="film-bg f5"></div><div class="film-frame"><span class="film-frame-icon">◼</span></div><div class="film-info"><p class="film-type" data-en="Music Video" data-fa="موزیک ویدیو">Music Video</p><p class="film-name" data-en="Project Title" data-fa="عنوان پروژه">Project Title</p><p class="film-year">2023</p></div></div>
+    <div class="film-card"><div class="film-bg f6"></div><div class="film-frame"><span class="film-frame-icon">◼</span></div><div class="film-info"><p class="film-type" data-en="Short Film" data-fa="فیلم کوتاه">Short Film</p><p class="film-name" data-en="Project Title" data-fa="عنوان پروژه">Project Title</p><p class="film-year">2022</p></div></div>
+  </div>
+</section>
+
+<!-- BTS -->
+<section id="bts">
+  <p class="section-label" data-en="Behind the Scenes" data-fa="پشت صحنه">Behind the Scenes</p>
+  <h2 class="section-title" data-en="On set, in the moment." data-fa="روی صحنه، در لحظه.">On set, in the moment.</h2>
+  <div class="bts-grid">
+    <div class="bts-card big"><div class="bts-bg">◼</div><div class="bts-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="bts-card"><div class="bts-bg">◼</div><div class="bts-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="bts-card"><div class="bts-bg">◼</div><div class="bts-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="bts-card"><div class="bts-bg">◼</div><div class="bts-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="bts-card"><div class="bts-bg">◼</div><div class="bts-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+    <div class="bts-card big"><div class="bts-bg">◼</div><div class="bts-hover"><span data-en="Your photo" data-fa="عکس شما">Your photo</span></div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background: var(--dark);">
+  <p class="section-label" data-en="About" data-fa="درباره من">About</p>
+  <h2 class="section-title" data-en="Who I am." data-fa="من که هستم.">Who I am.</h2>
+  <div class="about-grid">
+    <div class="about-photo">
+      <img src="https://i.ibb.co/RpRVmDM4/IMG-20250814-225939-619-1.jpg" alt="Farbod Farhadieh" style="width:100%;height:100%;object-fit:cover;display:block;">
+      <div style="position:absolute;top:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,var(--black),transparent);"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,var(--black),transparent);"></div>
+    </div>
+    <div class="about-text">
+      <div class="divider"></div>
+      <p data-en="I'm <strong>Farbod Farhadieh</strong>, a cinematographer, director and photographer based in Tehran. With a background spanning feature films, short films, documentaries, animation and commercial work, I bring both technical precision and creative vision to every project." data-fa="من <strong>فربد فرهادیه</strong> هستم، فیلمبردار، کارگردان و عکاس مستقر در تهران. با سابقه‌ای در فیلم‌های بلند، کوتاه، مستند، انیمیشن و کارهای تبلیغاتی، دقت فنی و دیدگاه خلاقانه را به هر پروژه‌ای می‌آورم.">I'm <strong>Farbod Farhadieh</strong>, a cinematographer, director and photographer based in Tehran. With a background spanning feature films, short films, documentaries, animation and commercial work, I bring both technical precision and creative vision to every project.</p>
+
+      <!-- EDUCATION -->
+      <div class="about-block">
+        <p class="about-block-title" data-en="EDUCATION" data-fa="تحصیلات">EDUCATION</p>
+        <div class="about-items">
+          <div class="about-item">
+            <p class="about-item-title" data-en="Soure University of Tehran" data-fa="موسسه آموزش عالی سوره تهران">Soure University of Tehran</p>
+            <p class="about-item-sub" data-en="Bachelor of Cinema · 2024 – Present" data-fa="کارشناسی سینما · ۱۴۰۳ – اکنون">Bachelor of Cinema · 2024 – Present</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="Cinema Youth Association" data-fa="انجمن سینما جوان">Cinema Youth Association</p>
+            <p class="about-item-sub" data-en="Filmmaking Course · 2021" data-fa="دوره فیلمسازی · ۱۴۰۰">Filmmaking Course · 2021</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPERIENCE -->
+      <div class="about-block">
+        <p class="about-block-title" data-en="EXPERIENCE" data-fa="سوابق کاری">EXPERIENCE</p>
+        <div class="about-items">
+          <div class="about-item">
+            <p class="about-item-title" data-en="Professional Photographer — Arvin Loader Isfahan" data-fa="عکاس حرفه‌ای — آروین لودر اصفهان">Professional Photographer — Arvin Loader Isfahan</p>
+            <p class="about-item-sub" data-en="Photography, video production, posters, stop motion animation · 2023–2024" data-fa="تولید تصاویر، ویدیو، پوستر، انیمیشن استاپ موشن و تیزر · ۱۴۰۲–۱۴۰۳">Photography, video production, posters, stop motion animation · 2023–2024</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="Graphic Illustrator — Dars o Mors" data-fa="تصویرساز گرافیک — درس و مرس">Graphic Illustrator — Dars o Mors</p>
+            <p class="about-item-sub" data-en="Book design and social media content · 2022" data-fa="طراحی کتاب‌های تست و پست‌های شبکه اجتماعی · ۱۴۰۱">Book design and social media content · 2022</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div class="about-block">
+        <p class="about-block-title" data-en="SELECTED PROJECTS" data-fa="پروژه‌های منتخب">SELECTED PROJECTS</p>
+        <div class="about-items">
+          <div class="about-item">
+            <p class="about-item-title" data-en="Short Film — Chocolate Talkh (Bitter Chocolate)" data-fa="فیلم کوتاه — شکلات تلخ">Short Film — Chocolate Talkh (Bitter Chocolate)</p>
+            <p class="about-item-sub" data-en="Director · 2022" data-fa="کارگردان · ۱۴۰۱">Director · 2022</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="Short Film — Yek Sham-e Sadeh (A Simple Dinner)" data-fa="فیلم کوتاه — یک شام ساده">Short Film — Yek Sham-e Sadeh (A Simple Dinner)</p>
+            <p class="about-item-sub" data-en="Director · 2021" data-fa="کارگردان · ۱۴۰۰">Director · 2021</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="Short Animation — Charkhofal (Ferris Wheel)" data-fa="انیمیشن کوتاه — چرخ و فلک">Short Animation — Charkhofal (Ferris Wheel)</p>
+            <p class="about-item-sub" data-en="Writer & Director · 2023–2024" data-fa="نویسنده و کارگردان · ۱۴۰۲–۱۴۰۳">Writer & Director · 2023–2024</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="Short Film — Top Kashi" data-fa="فیلم کوتاه — توپ کاشی">Short Film — Top Kashi</p>
+            <p class="about-item-sub" data-en="Director · 2021" data-fa="کارگردان · ۱۴۰۰">Director · 2021</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AWARDS -->
+      <div class="about-block">
+        <p class="about-block-title" data-en="AWARDS & HONORS" data-fa="جوایز و افتخارات">AWARDS & HONORS</p>
+        <div class="about-items">
+          <div class="about-item">
+            <p class="about-item-title" data-en="1st Place — Stop Motion National Festival" data-fa="رتبه اول — جشنواره ملی استاپ موشن">1st Place — Stop Motion National Festival</p>
+            <p class="about-item-sub" data-en="2022" data-fa="۱۴۰۱">2022</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="2nd Place National — Stop Motion Event" data-fa="رتبه دوم کشوری — رویداد ملی استاپ موشن">2nd Place National — Stop Motion Event</p>
+            <p class="about-item-sub" data-en="Hozeh Honari · 2023" data-fa="حوزه هنری کودک و نوجوان · ۱۴۰۲">Hozeh Honari · 2023</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="1st Place National — Short Narrative Film" data-fa="رتبه اول کشوری — فیلم داستانی کوتاه">1st Place National — Short Narrative Film</p>
+            <p class="about-item-sub" data-en="Ministry of Education · 2021" data-fa="آموزش و پرورش · ۱۴۰۰">Ministry of Education · 2021</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="Best Child Actor — Hasanat Film Festival Isfahan" data-fa="بهترین بازیگر خردسال — جشنواره فیلم حسنات اصفهان">Best Child Actor — Hasanat Film Festival Isfahan</p>
+            <p class="about-item-sub" data-en="Film: Absent · 2013" data-fa="فیلم: غایب · ۱۳۹۲">Film: Absent · 2013</p>
+          </div>
+          <div class="about-item">
+            <p class="about-item-title" data-en="1st Place — Farda Cultural Festival (Narrative)" data-fa="رتبه اول — جشنواره فرهنگی فردا (بخش داستانی)">1st Place — Farda Cultural Festival (Narrative)</p>
+            <p class="about-item-sub" data-en="2021" data-fa="۱۴۰۰">2021</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="about-block">
+        <p class="about-block-title" data-en="SKILLS" data-fa="مهارت‌ها">SKILLS</p>
+        <div class="skills-list">
+          <span class="skill-tag">Cinematography</span>
+          <span class="skill-tag">Photography</span>
+          <span class="skill-tag">Adobe Premiere</span>
+          <span class="skill-tag">After Effects</span>
+          <span class="skill-tag">Photoshop</span>
+          <span class="skill-tag">Moho</span>
+          <span class="skill-tag">Stop Motion</span>
+          <span class="skill-tag">Direction</span>
+          <span class="skill-tag">Lighting</span>
+          <span class="skill-tag">Storyboarding</span>
+          <span class="skill-tag">Team Management</span>
+          <span class="skill-tag">Screenwriting</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo" data-en="FARBOD FARHADIEH" data-fa="فربد فرهادیه">FARBOD FARHADIEH</span>
+  <p data-en="© 2024 · Cinematographer & DOP · Tehran" data-fa="© ۲۰۲۴ · فیلمبردار و مدیر فیلمبرداری · تهران">© 2024 · Cinematographer & DOP · Tehran</p>
+  <div style="display:flex;gap:20px;">
+    <a href="mailto:farhadiyehfarbod@gmail.com" style="color:var(--grey);font-size:0.7rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--grey)'">Email</a>
+    <a href="https://instagram.com/farhadiyehfarbod" target="_blank" style="color:var(--grey);font-size:0.7rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--grey)'">Instagram</a>
+    <a href="tel:+989134338279" style="color:var(--grey);font-size:0.7rem;text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--grey)'">Phone</a>
+  </div>
+</footer>
+
+<script>
+  let lang = 'en';
+  function toggleLang() {
+    lang = lang === 'en' ? 'fa' : 'en';
+    const html = document.documentElement;
+    const btn = document.querySelector('.lang-toggle');
+    if (lang === 'fa') {
+      html.setAttribute('lang','fa'); html.setAttribute('dir','rtl');
+      document.body.classList.add('fa');
+      btn.querySelector('.lang-text').textContent = 'English';
+    } else {
+      html.setAttribute('lang','en'); html.setAttribute('dir','ltr');
+      document.body.classList.remove('fa');
+      btn.querySelector('.lang-text').textContent = 'فارسی';
+    }
+    document.querySelectorAll('[data-en][data-fa]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (['H1','H2','P','SPAN'].includes(el.tagName) && val.includes('<')) el.innerHTML = val;
+      else el.textContent = val;
+    });
+  }
+</script>
+</body>
+</html>
